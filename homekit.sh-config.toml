@@ -1,0 +1,61 @@
+bridge = "bmw"
+port = 12317
+username = "AA:AA:AA:AA:AA:17"
+
+[[services]]
+type = "AccessoryInformation"
+
+[services.characteristics]
+Identify = {} # leave property completely out 'cos otherwise Homekit won't accept
+Manufacturer = "Jyri-Matti Lähteenmäki"
+Model = "X1"
+Name = "BMW"
+SerialNumber = "AA:AA:AA:AA:AA:17"
+FirmwareRevision = "100.1.1"
+
+
+[[services]]
+type = "BatteryService"
+
+[services.characteristics]
+Name = "Akku"
+[services.characteristics.BatteryLevel]
+cmd = "cd bmw; ./cmd/batteryPercentage.sh"
+[services.characteristics.ChargingState]
+cmd = "cd bmw; ./cmd/charge.sh"
+[services.characteristics.StatusLowBattery]
+cmd = "cd bmw; ./cmd/lowBattery.sh"
+
+
+[[services]]
+type = "TemperatureSensor"
+
+[services.characteristics]
+Name = "Akun varaus"
+ConfiguredName = "Akun varaus"
+[services.characteristics.CurrentTemperature]
+minValue = 0
+maxValue = 100
+minStep = 1
+cmd = "cd bmw; ./cmd/batteryPercentage.sh"
+
+
+[[services]]
+type = "Switch"
+
+[services.characteristics]
+Name = "Lataa"
+ConfiguredName = "Lataa"
+[services.characteristics.On]
+cmd = "cd bmw; ./cmd/charge.sh"
+
+
+[[services]]
+type = "Switch"
+
+[services.characteristics]
+Name = "Plugged"
+ConfiguredName = "Plugged"
+[services.characteristics.On]
+cmd = "cd bmw; ./cmd/plugged.sh"
+
