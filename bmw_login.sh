@@ -14,9 +14,7 @@ if [ -f "$refresh_token_file" ]; then
 fi
 
 get_access_token() {
-    expires="$(date --utc -d "$(cat "$expires_at_file")" +%s)"
-    now="$(date +%s)"
-    if [ ! -f "$expires_at_file" ] || [ "$expires" -lt "$now" ]; then
+    if [ ! -f "$expires_at_file" ] || [ "$(date --utc -d "$(cat "$expires_at_file")" +%s)" -lt "$(date +%s)" ]; then
         echo ""
     elif [ -f "$access_token_file" ]; then
         cat "$access_token_file"
