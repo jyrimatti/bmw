@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i python --pure --keep BMW_VIN --keep BMW_USERNAME --keep BMW_PASSWORD --keep CREDENTIALS_DIRECTORY -I channel:nixos-23.05-small -p python3Packages.bimmer-connected python3Packages.setuptools
+#! nix-shell -i python --pure --keep BMW_USERNAME --keep BMW_PASSWORD --keep CREDENTIALS_DIRECTORY -I channel:nixos-23.05-small -p python3Packages.bimmer-connected python3Packages.setuptools
 
 import sys
 import os
@@ -14,7 +14,7 @@ PASSWORD=os.environ.get('BMW_PASSWORD')
 
 REFRESH_TOKEN = None
 
-if len(sys.argv) > 1:
+if len(sys.argv) > 1 and sys.argv[1] != "":
     REFRESH_TOKEN=sys.argv[1]
 
 config = MyBMWClientConfiguration(MyBMWAuthentication(USERNAME, PASSWORD, Regions.REST_OF_WORLD, None, None, REFRESH_TOKEN))
