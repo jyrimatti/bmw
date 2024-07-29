@@ -44,8 +44,8 @@ cmd = "cd bmw; ./cmd/batteryPercentage.sh"
 type = "Switch"
 
 [services.characteristics]
-Name = "Lataa"
-ConfiguredName = "Lataa"
+Name = "Lataa autosta"
+ConfiguredName = "Lataa autosta"
 [services.characteristics.On]
 cmd = "cd bmw; ./cmd/charge.sh"
 
@@ -54,8 +54,8 @@ cmd = "cd bmw; ./cmd/charge.sh"
 type = "Switch"
 
 [services.characteristics]
-Name = "Plugged"
-ConfiguredName = "Plugged"
+Name = "Laturissa"
+ConfiguredName = "Laturissa"
 [services.characteristics.On]
 cmd = "cd bmw; ./cmd/plugged.sh"
 
