@@ -6,4 +6,4 @@ set -eu
 BMW_ACCESS_TOKEN="$(dash ./bmw_login.sh)"
 export BMW_ACCESS_TOKEN
 
-bkt --cwd --ttl "1m" --stale "30s" --cache-dir "${XDG_RUNTIME_DIR:-/tmp}/bmw" -- python3 ./data.sh fuel_and_battery | jq -r '.remaining_battery_percent'
+bkt --cwd --ttl "1m" --stale "30s" -- python3 ./data.sh fuel_and_battery | jq -r '.remaining_battery_percent'

@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i dash --pure --keep CREDENTIALS_DIRECTORY -I channel:nixos-23.05-small -p dash jq flock python3Packages.bimmer-connected python3Packages.setuptools
+#! nix-shell -i dash --pure --keep CREDENTIALS_DIRECTORY --keep XDG_RUNTIME_DIR -I channel:nixos-23.05-small -p dash jq flock bkt python3Packages.bimmer-connected python3Packages.setuptools
 set -eu
 
 getset="${1:-}"
@@ -26,7 +26,7 @@ if [ "$getset" = "Set" ]; then
     echo 0
   fi
 else
-  if [ "$(python3 ./data.sh fuel_and_battery | jq -r '.charging_status')" = "CHARGING" ]; then
+  if [ "$(bkt --cwd --ttl "1m" --stale "30s" -- python3 ./data.sh fuel_and_battery | jq -r '.charging_status')" = "CHARGING" ]; then
     echo 1
   else
     echo 0
