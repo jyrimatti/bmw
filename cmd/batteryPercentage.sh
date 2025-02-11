@@ -7,4 +7,8 @@ set -eu
 BMW_ACCESS_TOKEN="$(dash ./bmw_login.sh)"
 export BMW_ACCESS_TOKEN
 
-bkt --discard-failures --ttl "60s" --stale "50s" -- python3 ./data.sh fuel_and_battery | jq -r '.remaining_battery_percent'
+lock="${BKT_CACHE_DIR:-/tmp}/bmw.lock"
+
+flock "$lock" \
+    bkt --discard-failures --ttl "60s" --stale "50s" -- \
+        python3 ./data.sh fuel_and_battery | jq -r '.remaining_battery_percent'

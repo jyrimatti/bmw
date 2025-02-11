@@ -7,7 +7,9 @@ set -eu
 BMW_ACCESS_TOKEN="$(dash ./bmw_login.sh)"
 export BMW_ACCESS_TOKEN
 
-if [ "$(bkt --discard-failures --ttl "60s" --stale "50s" -- python3 ./data.sh fuel_and_battery | jq -r '.is_charger_connected')" = "true" ]; then
+lock="${BKT_CACHE_DIR:-/tmp}/bmw.lock"
+
+if [ "$(flock "$lock" bkt --discard-failures --ttl "60s" --stale "50s" -- python3 ./data.sh fuel_and_battery | jq -r '.is_charger_connected')" = "true" ]; then
   echo 1
 else
   echo 0

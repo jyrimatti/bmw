@@ -15,6 +15,8 @@ fi
 BMW_ACCESS_TOKEN="$(dash ./bmw_login.sh)"
 export BMW_ACCESS_TOKEN
 
+lock="${BKT_CACHE_DIR:-/tmp}/bmw.lock"
+
 if [ "$getset" = "Set" ]; then
   if [ "$value" = "1" ]; then
     res="$(python3 ./data.sh trigger_charge_start)"
@@ -27,7 +29,7 @@ if [ "$getset" = "Set" ]; then
     echo 0
   fi
 else
-  if [ "$(bkt --discard-failures --ttl "60s" --stale "50s" -- python3 ./data.sh fuel_and_battery | jq -r '.charging_status')" = "CHARGING" ]; then
+  if [ "$(flock "$lock" bkt --discard-failures --ttl "60s" --stale "50s" -- python3 ./data.sh fuel_and_battery | jq -r '.charging_status')" = "CHARGING" ]; then
     echo 1
   else
     echo 0
