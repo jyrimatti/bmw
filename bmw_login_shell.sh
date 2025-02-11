@@ -1,5 +1,6 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i dash --pure --keep CREDENTIALS_DIRECTORY -I channel:nixos-23.05-small -p dash jq flock libuuid coreutils openssl
+#! nix-shell --keep CREDENTIALS_DIRECTORY --keep BKT_SCOPE --keep BKT_CACHE_DIR
+#! nix-shell -i dash -I channel:nixos-23.05-small -p dash jq flock libuuid coreutils openssl bkt
 set -eu
 
 # from: https://bimmer-connected.readthedocs.io/

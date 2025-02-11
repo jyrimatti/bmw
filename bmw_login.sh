@@ -1,6 +1,9 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i dash --pure --keep BMW_USERNAME --keep BMW_PASSWORD --keep CREDENTIALS_DIRECTORY -I channel:nixos-23.05-small -p dash jq flock python3Packages.bimmer-connected python3Packages.setuptools
+#! nix-shell --pure --keep CREDENTIALS_DIRECTORY --keep BKT_SCOPE --keep BKT_CACHE_DIR
+#! nix-shell -i dash -I channel:nixos-23.05-small -p dash jq flock python3Packages.bimmer-connected python3Packages.setuptools bkt
 set -eu
+
+. ./bmw_env.sh
 
 DIR="${XDG_RUNTIME_DIR:-/tmp}/bmw"
 test -e "$DIR" || mkdir -p "$DIR"
